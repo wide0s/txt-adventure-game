@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# will stop this script on any error
+set -e
+
+venv=".venv"
+
+OC='\033[0;33m'
+GC='\033[0;32m'
+NC='\033[0m'
+
+usage()
+{
+	echo "Syntax: run.sh [ -h ] [ -i ] [ -f ]"
+	echo "Options:"
+	echo ""
+	echo "   -h          Show this help and exit."
+	echo "   -i          Install venv if it does not exist and exit."
+	echo "   -f          Force reinstall venv and exit."
+	echo
+	echo "Examples:"
+	echo
+	echo "   ./run -i"
+	echo "   ./run -f"
+}
+
+while getopts "hfi" option; do
+	case $option in
+		h)
+			usage
+			exit 0;;
+		i)
+			install=y
+			;;
+		f)
+			reinstall=y
+			;;
+		\?)
+			echo "error: invalid argument given, run with -h"
+			exit 1;;
+		esac
+done
+
+[ -v reinstall ] && rm -rf $venv
+
+if [ ! -d $venv ]; then
+	echo -e "${OC}working...${NC}"
+	python3 -m venv $venv
+	source $venv/bin/activate
+	pip install --upgrade pip
+	pip install -U pip wheel setuptools
+	[ -f requirements.txt ] && pip install -r requirements.txt
+fi
+
+echo -e "${GC}The game is ready to start.${NC}"
+echo -e "${GC} \$ source ${venv}/bin/activate${NC}"
+echo -e "${GC} \$ python game.py${NC}"
