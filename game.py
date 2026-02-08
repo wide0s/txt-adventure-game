@@ -122,7 +122,7 @@ beautiful_forest = Scene(
           ~        .     ~
 
   Strange flowers glow faintly beneath the trees.
-  The forest feels ancient… and aware.
+  The forest feels ancient... and aware.
 
   Whoa! It is so beautiful here. There are so many
   trees and everything is blooming.
@@ -247,3 +247,4 @@ except KeyboardInterrupt:
 print("\nYou slowly open your eyes and realize that it was all just a dream. Just a strange dream.")
 
 pygame.mixer.quit()
+
